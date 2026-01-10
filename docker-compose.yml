@@ -4,7 +4,7 @@ services:
       context: ./comfyui
       dockerfile: Dockerfile
       args:
-        USERNAME: ${USERNAME}
+        APP_USER: ${APP_USER}
         UID: ${UID}
         GID: ${GID}
     container_name: comfyui
@@ -12,12 +12,13 @@ services:
     ports:
       - "8188:8188"
     volumes:
-      - ./comfyui/ComfyUI:/home/${USERNAME}/ComfyUI
+      - ./comfyui/ComfyUI:/home/${APP_USER}/ComfyUI
     environment:
       - TZ=Asia/Tokyo
-      - USERNAME=${USERNAME}
+      - APP_USER=${APP_USER}
       - UID=${UID}
       - GID=${GID}
+    #entrypoint: ["/bin/bash"]
     deploy:
       resources:
         reservations:

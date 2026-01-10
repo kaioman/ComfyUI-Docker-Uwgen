@@ -1,5 +1,5 @@
 #!/bin/bash
-COMFYUI_DIR="/home/${USERNAME}/ComfyUI"
+COMFYUI_DIR="/home/${APP_USER}/ComfyUI"
 COMFYUI_MAIN_PY="${COMFYUI_DIR}/main.py"
 
 # If ComfyUI main.py does not exist, install it.

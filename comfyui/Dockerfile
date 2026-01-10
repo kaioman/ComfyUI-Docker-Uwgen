@@ -77,23 +77,23 @@ COPY --from=builder /usr/local/bin /usr/local/bin
 
 # --- ここからユーザ関連の設定 ---
 # ビルド引数でログインユーザ情報を受け取る
-ARG USERNAME
+ARG APP_USER
 ARG UID
 ARG GID
 
 # 非rootユーザ作成
 # ユーザーのホームディレクトリに ComfyUI を設置
-RUN groupadd -g ${GID} ${USERNAME} && \
-    useradd -m -u ${UID} -g ${GID} ${USERNAME}
+RUN groupadd -g ${GID} ${APP_USER} && \
+    useradd -m -u ${UID} -g ${GID} ${APP_USER}
 
 # Entrypoint のシェルスクリプトをコピー
-COPY entrypoint.sh /home/${USERNAME}/entrypoint.sh
-RUN chmod +x /home/${USERNAME}/entrypoint.sh && chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/
+COPY entrypoint.sh /home/${APP_USER}/entrypoint.sh
+RUN chmod +x /home/${APP_USER}/entrypoint.sh && chown -R ${APP_USER}:${APP_USER} /home/${APP_USER}/
 # --- ここまでユーザ関連の設定 ---
 
 # Web UI 用のポートを公開
 EXPOSE 8188
 
 # コンテナ起動時に entrypoint.sh を実行（非rootユーザで実行）
-USER ${USERNAME}
-ENTRYPOINT ["sh", "-c", "/home/${USERNAME}/entrypoint.sh"]
+USER ${APP_USER}
+ENTRYPOINT ["sh", "-c", "/home/${APP_USER}/entrypoint.sh"]
