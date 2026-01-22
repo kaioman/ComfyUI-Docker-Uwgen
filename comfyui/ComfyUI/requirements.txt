@@ -28,3 +28,8 @@ kornia>=0.7.1
 spandrel
 pydantic~=2.0
 pydantic-settings~=2.0
+
+numba
+scikit-image
+opencv-python
+webcolors
