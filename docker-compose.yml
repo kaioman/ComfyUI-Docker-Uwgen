@@ -18,6 +18,8 @@ services:
       - APP_USER=${APP_USER}
       - UID=${UID}
       - GID=${GID}
+      - UWGEN_API_KEY=${UWGEN_API_KEY}
+      - UWGEN_API_ENDPOINT=${UWGEN_API_ENDPOINT}
     #entrypoint: ["/bin/bash"]
     deploy:
       resources:
