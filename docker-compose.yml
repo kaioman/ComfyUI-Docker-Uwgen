@@ -13,6 +13,7 @@ services:
       - "8188:8188"
     volumes:
       - ./comfyui/ComfyUI:/home/${APP_USER}/ComfyUI
+      - ./uwgen:/home/${APP_USER}/uwgen
     environment:
       - TZ=Asia/Tokyo
       - APP_USER=${APP_USER}
@@ -20,7 +21,7 @@ services:
       - GID=${GID}
       - UWGEN_API_KEY=${UWGEN_API_KEY}
       - UWGEN_API_ENDPOINT=${UWGEN_API_ENDPOINT}
-      - CONFIG_DIR=/home/${APP_USER}/ComfyUI
+      - PROJECT_ROOT=/home/${APP_USER}/uwgen
     #entrypoint: ["/bin/bash"]
     deploy:
       resources:
@@ -30,3 +31,9 @@ services:
               count: all
               capabilities: [ gpu ]
     tty: true
+    networks:
+      - docker-container_default
+
+networks:
+  docker-container_default:
+    external: true

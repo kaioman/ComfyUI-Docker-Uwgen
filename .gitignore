@@ -1,2 +1,7 @@
 .env
 env
+pycorex.json
+log
+gen_images
+source_image
+LoRA

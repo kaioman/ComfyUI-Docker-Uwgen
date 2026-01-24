@@ -34,3 +34,5 @@ scikit-image
 opencv-python
 webcolors
 GitPython
+
+pycorex
