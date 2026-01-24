@@ -8,5 +8,12 @@ def parse_args():
 
 def main():
     args = parse_args()
+
+    prompt = args.prompt
+    input_path = args.input
+
+    print(f"prompt:{prompt}")
+    print(f"input_path:{input_path}")
     
-    input_image = args.input
+if __name__ == "__main__":
+    main()

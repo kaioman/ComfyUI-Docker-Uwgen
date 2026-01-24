@@ -24,6 +24,7 @@ RUN apt-get install -y \
     python3-pip \
     git && \
     update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.11 1 && \
+    ln -s /usr/bin/python3 /usr/bin/python && \
     python3 -m pip install --upgrade pip setuptools wheel
 
 # CUDA ランタイムのセットアップ
@@ -85,6 +86,14 @@ ARG GID
 # ユーザーのホームディレクトリに ComfyUI を設置
 RUN groupadd -g ${GID} ${APP_USER} && \
     useradd -m -u ${UID} -g ${GID} ${APP_USER}
+WORKDIR /home/${APP_USER}
+
+# ホストのrequirements.txtをコピー
+COPY requirements.txt /tmp/requirements.txt
+
+# Python の依存パッケージをインストール
+RUN pip install --no-cache-dir -r /tmp/requirements.txt && \
+    rm /tmp/requirements.txt
 
 # Entrypoint のシェルスクリプトをコピー
 COPY entrypoint.sh /home/${APP_USER}/entrypoint.sh

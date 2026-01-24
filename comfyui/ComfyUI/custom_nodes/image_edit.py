@@ -1,4 +1,8 @@
+import os
+import tempfile
 import subprocess
+import numpy as np
+from PIL import Image
 
 class ImageEdit:
     
@@ -19,14 +23,25 @@ class ImageEdit:
         print("ImageEdit node called", flush=True)
         print(prompt, flush=True)
 
+        # Tensor → PIL Imageに変換
+        image_np = (input_image[0].cpu().numpy() * 255).astype(np.uint8)
+        image_pil = Image.fromarray(image_np)
+        
+        # 一時ファイルに保存
+        with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as tmp_file:
+            image_path = tmp_file.name
+            image_pil.save(image_path)
+            
         # プロンプトを外部スクリプトに渡して実行
+        script_path = os.path.join(os.path.dirname(__file__), "..", "utils", "image_edit_output.py")
         subprocess.run([
-            "python3",
-            "image_edit_output.py",
+            "python",
+            script_path,
             "--prompt", prompt,
-            "--input", input_image,
+            "--input", image_path,
         ], check=True)
         
+        # ダミー出力
         return (input_image,)
 
 class NullSink:
