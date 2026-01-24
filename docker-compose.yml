@@ -20,6 +20,7 @@ services:
       - GID=${GID}
       - UWGEN_API_KEY=${UWGEN_API_KEY}
       - UWGEN_API_ENDPOINT=${UWGEN_API_ENDPOINT}
+      - CONFIG_DIR=/home/${APP_USER}/ComfyUI
     #entrypoint: ["/bin/bash"]
     deploy:
       resources:
