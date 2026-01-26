@@ -22,19 +22,21 @@ class ImageEdit:
     CATEGORY = "Image/Editing"
     
     def run(self, prompt, input_image):
-
-        # pycorex初期化
-        app.init_app(__file__, "logger.json", "pycorex.json")
-        app_logger.info("ImageEdit node called")
-        
-        # Tensor → PIL Imageに変換
-        image_np = (input_image[0].cpu().numpy() * 255).astype(np.uint8)
-        image_pil = Image.fromarray(image_np)
         
         # ルート取得
         base_dir = os.getenv("PROJECT_ROOT")
         if not base_dir:
             raise RuntimeError("PROJECT_ROOT environment variable is not set")
+        print(base_dir)
+        
+        # pycorex初期化
+        app.init_app(__file__, "logger.json", "pycorex.json")
+        app_logger.info("ImageEdit node called")
+        app_logger.info(f"project_root: {app.core.config.project_root_path}")
+
+        # Tensor → PIL Imageに変換
+        image_np = (input_image[0].cpu().numpy() * 255).astype(np.uint8)
+        image_pil = Image.fromarray(image_np)
 
         # 出力先
         save_dir = Path(base_dir) / "source_image"
@@ -58,7 +60,7 @@ class ImageEdit:
                 script_path,
                 "--prompt", prompt,
                 "--input", image_path,
-            ], check=True)
+            ], check=True, env=os.environ.copy())
         except subprocess.CalledProcessError as e:        
             app_logger.error(f"External script failed: {e}")
         finally:

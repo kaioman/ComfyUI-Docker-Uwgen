@@ -2,7 +2,7 @@
     "logging": {
         "logfile_name": "uwgen_for_comfyui.log",
         "logfile_name_suffix": 0,
-        "logfolder_name": "uwgen/log",
+        "logfolder_name": "log",
         "logformat": "%(levelname)-7s : %(asctime)s : %(message)s",
         "loglevel": 20,
         "log_prefix_format": "[ {} {} ]",
